@@ -20,7 +20,7 @@ const styles = {
     }
 }
 
-export default Card = (props) => {
+const Card = (props) => {
     const { containerStyle } = styles
     return (
         <View style={ containerStyle } >
@@ -28,3 +28,5 @@ export default Card = (props) => {
         </View>
     );
 }
+
+export { Card }

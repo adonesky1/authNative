@@ -14,7 +14,7 @@ const styles = {
     }
 }
 
-export default CardSection = (props) => {
+const CardSection = (props) => {
     const { containerStyle } = styles
     return (
 
@@ -23,3 +23,6 @@ export default CardSection = (props) => {
         </View>
     );
 }
+
+
+export { CardSection }

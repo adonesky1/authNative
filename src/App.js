@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import firebase from 'firebase'
 import { Header } from './components/common';
-import LoginForm from './components/LoginForm'
+import LoginForm from './components/LoginForm';
+// import dotenv from 'dotenv';
+
+// dotenv.config({silent: true})
 
 class App extends Component {
     constructor(props) {

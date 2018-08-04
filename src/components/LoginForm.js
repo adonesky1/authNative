@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import firebase from 'firebase';
-import { Button, Card, CardSection, Input } from './common';
+import { Button, Card, CardSection, Input, Spinner } from './common';
 
 class LoginForm extends Component {
-    state = { email: '', password: '', error: '' }
-
+    constructor(props){
+        super(props)
+        this.state = { email: '', password: '', error: '', loading: false }
+    }
     onButtonPress(){
-        const {email, password} = this.state
+        const { email, password } = this.state
+
+        this.setState({ error: '', loading: true })
         firebase.auth().signInWithEmailAndPassword(email, password)
         .catch(()=>{
             firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -17,6 +21,16 @@ class LoginForm extends Component {
         })
     }
 
+    renderButton(){
+        if(this.state.loading) return <Spinner size="small" />
+        else{
+            return( 
+                <Button onPress={this.onButtonPress.bind(this)}>
+                    Log in
+                </Button>
+            )
+        }
+    }
     render(){
         const { errorStyle } = styles
         return (
@@ -27,7 +41,7 @@ class LoginForm extends Component {
                         placeholder="user@gmail.com"
                         label= 'Email:'
                         value={this.state.email}
-                        onChangeText={email=> this.setState({ email })}
+                        onChangeText={email=> this.setState({ email }, ()=> console.log("THIS.email", this.state.email))}
                         />
                 </CardSection>
                 <CardSection>
@@ -36,7 +50,7 @@ class LoginForm extends Component {
                         placeholder="password"
                         label="Password"
                         value={this.state.password}
-                        onChangeText={password=> this.setState({password})}
+                        onChangeText={password=> this.setState({password}, ()=> console.log("THIS.PW", this.state.password))}
                     
                     />
                 </CardSection>
@@ -46,9 +60,7 @@ class LoginForm extends Component {
                 </Text>
 
                 <CardSection>
-                    <Button onPress={}>
-                        Log in
-                    </Button>
+                   {this.renderButton()}
                 </CardSection>
             </Card>
 
@@ -56,7 +68,7 @@ class LoginForm extends Component {
     }
 }
 
-const style = {
+const styles = {
     errorStyle:{
         fontSize: 20,
         alignSelf: 'center',
